@@ -1,0 +1,4 @@
+"0",""
+"0","sf_tmin <- st_as_sf(x = df_tmin_c, "
+"0","                         coords = c(""Longitude"", ""Latitude""), "
+"0","                         crs = 4326) "

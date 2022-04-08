@@ -1,0 +1,10 @@
+"0","#It is necessary to copy this code chunk to a script because view mode is not supported in the R markdown"
+"0",""
+"0","tmap_mode(""view"")"
+"2","tmap mode set to interactive viewing
+"
+"0","tm_shape(shp = sf_tmin) + "
+"0","  tm_dots(col = ""navy"", "
+"0","          border.col = ""black"", "
+"0","          size = 0.1, "
+"0","          alpha = 0.8)"

@@ -1,0 +1,4 @@
+"0",""
+"0","weather_st <- read_xlsx(""Normal-Climatologica-ESTAÇÕES.xlsx"", skip = 2, col_names = T)"
+"0",""
+"0","weather_st <- weather_st[ ,c(2,5:7)]"

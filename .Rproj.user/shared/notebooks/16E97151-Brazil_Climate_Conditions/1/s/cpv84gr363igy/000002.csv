@@ -1,0 +1,4 @@
+"0","df_mean <- df %>%"
+"0","mutate(annual_mean = rowMeans(df[ ,4:15], na.rm = T))"
+"0",""
+"0",""

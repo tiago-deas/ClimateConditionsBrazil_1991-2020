@@ -1,0 +1,14 @@
+"0",""
+"0","df_tmax <- read_xlsx(""Normal-Climatologica-TMAXABS.xlsx"", skip = 2, col_names = T)"
+"2","New names:
+* `` -> ...5
+* `` -> ...7
+* `` -> ...9
+* `` -> ...11
+* `` -> ...13
+* ...
+"
+"0","df_tmax <- na.omit(df_tmax)"
+"0","df_tmax <- df_tmax[ ,-29]"
+"0",""
+"0","df_tmax[df_tmax == ""-""] <- NA"

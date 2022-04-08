@@ -1,0 +1,4 @@
+"0",""
+"0","df_tmax_complete <- left_join(df_tmax_complete,"
+"0","                        state_codes,"
+"0","                        by = ""UF"")"

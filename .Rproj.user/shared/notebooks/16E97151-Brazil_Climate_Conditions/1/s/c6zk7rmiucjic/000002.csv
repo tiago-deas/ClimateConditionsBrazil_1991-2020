@@ -1,0 +1,4 @@
+"0","df_tmax2 <- df_tmax %>% "
+"0","  mutate(highest_temp = apply(df_tmax[ ,4:15], 1, FUN = max, na.rm = TRUE))"
+"0","  "
+"0","df_tmax2 <- df_tmax2[ ,c(1:3, 29)]"

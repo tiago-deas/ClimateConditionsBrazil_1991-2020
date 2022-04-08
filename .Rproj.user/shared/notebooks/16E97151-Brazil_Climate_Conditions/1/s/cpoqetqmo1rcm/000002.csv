@@ -1,0 +1,2 @@
+"0","df_prec <- left_join(x = df_state, y = state_codes, by = ""UF"") %>% "
+"0","  rename(""CD_GEOCODU"" = ""COD"")"

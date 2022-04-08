@@ -1,0 +1,7 @@
+"0","writeOGR(obj = shp_complete,"
+"0","         layer = ""brazil_precipitation"","
+"0","         driver = ""ESRI Shapefile"","
+"0","         dsn = ""shp_precipitation"")"
+"2","Error in writeOGR(obj = shp_complete, layer = ""brazil_precipitation"",  : 
+  layer exists, use a new layer name
+"

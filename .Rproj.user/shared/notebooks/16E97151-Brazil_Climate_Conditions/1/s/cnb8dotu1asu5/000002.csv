@@ -1,0 +1,4 @@
+"0",""
+"0","df_tmin_complete <- left_join(df_tmin_complete,"
+"0","                        state_codes,"
+"0","                        by = ""UF"")"

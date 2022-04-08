@@ -1,0 +1,8 @@
+"0",""
+"0","tm_shape(shp = shp_brazil) + "
+"0","  tm_borders(alpha = 0.5) +"
+"0","  tm_shape(shp = sf_tmax) + "
+"0","  tm_dots(col = ""UF"", "
+"0","          size = 0.2) +"
+"0","  tmap_options(check.and.fix = TRUE)"
+"0",""
