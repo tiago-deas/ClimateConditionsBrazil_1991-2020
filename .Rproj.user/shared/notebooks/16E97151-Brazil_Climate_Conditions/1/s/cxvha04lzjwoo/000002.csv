@@ -1,4 +1,0 @@
-"0","df <- read_xlsx(""Normal-Climatologica-PREC.xlsx"", skip = 2,col_names = T)"
-"0",""
-"0","df[df==""-""] <- NA"
-"0",""

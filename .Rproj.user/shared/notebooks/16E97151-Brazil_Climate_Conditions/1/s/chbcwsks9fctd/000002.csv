@@ -1,3 +1,0 @@
-"0","shp_complete <- merge(x = shp_brazil,"
-"0","                      y = df_prec,"
-"0","                      by = ""CD_GEOCODU"")"

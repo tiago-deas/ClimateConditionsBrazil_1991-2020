@@ -1,4 +1,0 @@
-"0",""
-"0","sf_tmax <- st_as_sf(x = df_tmax_c, "
-"0","                         coords = c(""Longitude"", ""Latitude""), "
-"0","                         crs = 4326) "

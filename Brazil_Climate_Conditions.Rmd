@@ -1,15 +1,19 @@
 ---
-title: "Precipitação"
+title: "An Overview of Brazil's weather conditions from 1991 to 2020"
 author: "Tiago de Almeida Silva"
 date: "23/03/2022"
-output: html_document
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    df_print: paged
 ---
 
 Personal project of weather conditions in Brazil from 1991 to 2020. In this study case was used an official document recently released by the Brazilian National Institute of Meteorology (INMET), this document presents several weather and climate conditions in Brazil from a 30-year range. In this project, I will analyze and present my findings concerning precipitation, minimum and maximum temperature in the Brazilian states during this period. I am using the average of the variables used in this study to get an overall overview of how the climate in Brazil has been behaving during the last 3 decades.
 
-----------------------------------------------------------------------------------------------------------------------
 
-Part 1
+
+**Part 1**
 
 In the first part of my project, I will work with the precipitation dataset that presents how much rain, in "mm", has been fallen monthly in the hundreds of INMET weather stations spread around the Brazilian territory. All my findings are related to the states in Brazil and for this reason, I will group the weather stations according to their respective states. 
 
@@ -21,7 +25,8 @@ Loading the libraries used in this project
 ```{r results='hide', message=FALSE, warning=FALSE}
 
 pacotes <- c("tidyverse","sf","tmap","rgdal","rgeos","adehabitatHR","knitr",
-             "kableExtra", "tidyr", "ggplot2", "readxl", "maptools", "broom", "kableExtra", "RColorBrewer", "dplyr", "readr","zoo", "sqldf")
+             "kableExtra", "tidyr", "ggplot2", "readxl", "maptools", "broom",
+             "kableExtra", "RColorBrewer", "dplyr", "readr","zoo", "sqldf")
 
 if(sum(as.numeric(!pacotes %in% installed.packages())) != 0){
   instalador <- pacotes[!pacotes %in% installed.packages()]
@@ -197,10 +202,10 @@ shp_complete@data
 Saving the updated Shapefile into the project folder.
 
 ```{r}
-writeOGR(obj = shp_complete,
-         layer = "brazil_precipitation",
-         driver = "ESRI Shapefile",
-         dsn = "shp_precipitation")
+# writeOGR(obj = shp_complete,
+#         layer = "brazil_precipitation",
+#        driver = "ESRI Shapefile",
+#        dsn = "shp_precipitation")
 ```
 
 Plotting our findings into the shapefile of Brazil. As I mentioned before, the state of Rondônia (RO) do not have data related to precipitation during this period and for this reason the state is in gray.
@@ -259,9 +264,9 @@ ggplot(data = df_complete, aes(x = reorder(NM_ESTADO, (total)), y = total, fill 
 
 It is interesting to notice, in the map and graph, the high volume of monthly rain in northern Brazil (darker blue region in the map) and that's due to the Amazon rainforest that covers most of these states. Santa Catarina state, in the south of Brazil, also presents a high volume, and the state is known to be the only place in Brazil to suffer the consequences of cyclones and tornados, perhaps that's one of the explanations for this federal unit shows higher precipitation than the neighbor states. The northeast states are drier (orange region in the map) than the rest of Brazil because there is a large semiarid region, known as "Caatinga", throughout this region.
 
------------------------------------------------------------------------------------------------------------------------
 
-Part 2
+
+**Part 2**
 
 In the second part of the project, I will analyze what was the lowest temperature registered in the available INMET weather stations throughout the country, and after that, I will gather the data showing the lowest temperature registered within each state of Brazil from 1991 to 2020.
 
@@ -357,7 +362,7 @@ Viewing the same data points ploted into the Brazil surface.
 ```{r}
 #It is necessary to copy this code chunk to a script because view mode is not supported in the R markdown
 
-tmap_mode("view")
+tmap_mode("plot")
 
 tm_shape(shp = sf_tmin) + 
   tm_dots(col = "navy", 
@@ -416,9 +421,10 @@ df_tmin_c1 <- df_tmin_c %>%
   rename("Code" = "Código",
          "Station" = "Nome da Estação")
 
-df_tmin_complete <- sqldf("SELECT Code, Station, UF, Latitude, Longitude, Atitude, MIN(lowest_temp) as Lowest
-               FROM df_tmin_c1
-               GROUP BY UF") %>% 
+df_tmin_complete <- sqldf("SELECT Code, Station, UF, Latitude, Longitude, Atitude, 
+                          MIN(lowest_temp) as Lowest
+                          FROM df_tmin_c1
+                          GROUP BY UF") %>% 
   rename("Altitude" = "Atitude")
 
 ```
@@ -438,7 +444,8 @@ Plotting a scatter plot to check if there is any relationship between minimun te
 ```{r fig.width=8,fig.height=8}
 ggplot(df_tmin_complete, aes(Lowest ,Altitude)) +
   geom_point(color = "Red2") +
-  geom_text(label = paste(df_tmin_complete$Station, df_tmin_complete$UF, sep = " - "), size = 2.4, vjust = -0.7, hjust = 0.4) +
+  geom_text(label = paste(df_tmin_complete$Station, df_tmin_complete$UF, sep = " - "), 
+            size = 2.4, vjust = -0.7, hjust = 0.4) +
   labs(
     title = "Relationship between Minimum Temperature x Altitude",
     x = "Temperature",
@@ -475,11 +482,13 @@ tm_shape(shp = shp_brazil2) +
   tm_polygons("Lowest",
               title = "Lowest Temperature by State (ºC)",
               style = "fixed",
-              palette = c("blue4", "blue3", "royalblue1", "steelblue1", "lightblue2", "cadetblue1", "khaki","darkorange1"),
+              palette = c("blue4", "blue3", "royalblue1", "steelblue1",
+                          "lightblue2", "cadetblue1", "khaki","darkorange1"),
               breaks = c(-Inf, -8, -4, 0, 4, 8, 12, 16, Inf),
               colorNA = "gray",
               textNA = "No available data for RO and MS") +
-  tm_layout(main.title = "Weather stations that presented the lowest Temperatures by state from 1991 to 2020",
+  tm_layout(main.title = "Weather stations that presented the 
+            lowest Temperatures by state from 1991 to 2020",
           title = "Only INMET Weather Stations available during this period",
                         title.size = 0.7) +
   tm_compass(type = "8star",
@@ -509,7 +518,8 @@ df_tmin_complete2$Region[df_tmin_complete2$UF %in% c("RS", "SC", "PR")] <- "Sout
 df_tmin_complete2$Region[df_tmin_complete2$UF %in% c("RJ", "SP", "MG", "ES")] <- "Southeast"
 df_tmin_complete2$Region[df_tmin_complete2$UF %in% c("MT", "GO", "DF")] <- "Center-West"
 df_tmin_complete2$Region[df_tmin_complete2$UF %in% c("AM", "RR", "AP", "PA", "TO", "AC")] <- "North"
-df_tmin_complete2$Region[df_tmin_complete2$UF %in% c("AL", "SE", "BA", "PE", "PB", "CE", "MA", "PI", "RN")] <- "Northeast"
+df_tmin_complete2$Region[df_tmin_complete2$UF %in% c("AL", "SE", "BA", "PE",
+                                                     "PB", "CE", "MA", "PI", "RN")] <- "Northeast"
 
 ggplot(df_tmin_complete2, aes(reorder(UF, (Lowest)), Lowest, fill = Region)) +
   geom_col() +
@@ -525,9 +535,8 @@ ggplot(df_tmin_complete2, aes(reorder(UF, (Lowest)), Lowest, fill = Region)) +
   theme_classic()
 ```
 
-----------------------------------------------------------------------------------------------------------------------
 
-Part 3
+**Part 3**
 
 In the third part of the project, I will analyze what was the highest temperature registered in the available INMET weather stations throughout the country, and after that, I will gather the data showing the highest temperature registered within each state of Brazil from 1991 to 2020.
 
@@ -576,7 +585,7 @@ sf_tmax <- st_as_sf(x = df_tmax_c,
 Viewing the same data points plotted on the Brazil surface.
 
 ```{r}
-tmap_mode("view")
+tmap_mode("plot")
 
 tm_shape(shp = sf_tmax) + 
   tm_dots(col = "navy", 
@@ -615,7 +624,8 @@ df_tmax_c1 <- df_tmax_c %>%
   rename("Code" = "Código",
          "Station" = "Nome da Estação")
 
-df_tmax_complete <- sqldf("SELECT Code, Station, UF, Latitude, Longitude, Atitude, ROUND(MAX(highest_temp)) as Highest
+df_tmax_complete <- sqldf("SELECT Code, Station, UF, Latitude, Longitude, 
+                          Atitude, ROUND(MAX(highest_temp)) as Highest
                FROM df_tmax_c1
                GROUP BY UF") %>% 
   rename("Altitude" = "Atitude")
@@ -637,7 +647,8 @@ Plotting a scatter plot to check if there is any relationship between maximum te
 
 ggplot(df_tmax_complete, aes(Highest ,Altitude)) +
   geom_point(color = "Red2") +
-  geom_text(label = paste(df_tmax_complete$Station, df_tmax_complete$UF, sep = " - "), size = 2.1, vjust = -0.7, hjust = 0.4) +
+  geom_text(label = paste(df_tmax_complete$Station, df_tmax_complete$UF, sep = " - "),
+            size = 2.1, vjust = -0.7, hjust = 0.4) +
   labs(
     title = "Relationship between Maximum Temperature x Altitude",
     x = "Temperature",
@@ -680,7 +691,8 @@ tm_shape(shp = shp_brazil3) +
               breaks = c(-Inf, 36, 38, 40, 42, Inf),
               colorNA = "gray",
               textNA = "No available data for RO") +
-  tm_layout(main.title = "Weather Stations that presented the highest Temperatures  by state from 1991 to 2020",
+  tm_layout(main.title = "Weather Stations that presented the highest 
+            Temperatures  by state from 1991 to 2020",
           title = "Only INMET Weather Stations available during this period",
                         title.size = 0.7) +
   tm_compass(type = "8star",
@@ -710,7 +722,8 @@ df_tmax_complete2$Region[df_tmax_complete2$UF %in% c("RS", "SC", "PR")] <- "Sout
 df_tmax_complete2$Region[df_tmax_complete2$UF %in% c("RJ", "SP", "MG", "ES")] <- "Southeast"
 df_tmax_complete2$Region[df_tmax_complete2$UF %in% c("MT", "GO", "DF", "MS")] <- "Center-West"
 df_tmax_complete2$Region[df_tmax_complete2$UF %in% c("AM", "RR", "AP", "PA", "TO", "AC")] <- "North"
-df_tmax_complete2$Region[df_tmax_complete2$UF %in% c("AL", "SE", "BA", "PE", "PB", "CE", "MA", "PI", "RN")] <- "Northeast"
+df_tmax_complete2$Region[df_tmax_complete2$UF %in% c("AL", "SE", "BA", "PE",
+                                                     "PB", "CE", "MA", "PI", "RN")] <- "Northeast"
 
 ggplot(df_tmax_complete2, aes(reorder(UF, (Highest)), Highest, fill = Region)) +
   geom_col() +
@@ -726,9 +739,8 @@ ggplot(df_tmax_complete2, aes(reorder(UF, (Highest)), Highest, fill = Region)) +
                      labels = paste0(seq(30, 44, by = 4), "ºC")) 
 ```
 
-------------------------------------------------------------------------------------------------------------------------
 
-Conclusion
+**Conclusion**
 
 As it is shown in this project, the weather conditions in Brazil vary substantially according to the country's regions and states. The is more rain in the northern states than the northeast ones because the Amazon, which is a rainforest, is located in this region. On the other hand, there is a large semiarid area in the northeast of Brazil, that's why there is way less precipitation over there.
 

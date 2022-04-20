@@ -1,5 +1,0 @@
-"0","df_tmin2 <- df_tmin %>% "
-"0","  mutate(lowest_temp = apply(df_tmin[ ,4:15], 1, FUN = min, na.rm = TRUE))"
-"0","  "
-"0","df_tmin2 <- df_tmin2[ ,c(1:3, 16)]"
-"0",""

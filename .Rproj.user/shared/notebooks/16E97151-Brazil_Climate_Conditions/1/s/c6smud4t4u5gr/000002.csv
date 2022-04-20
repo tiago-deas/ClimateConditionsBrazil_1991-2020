@@ -1,3 +1,0 @@
-"0","df_state <- df_mean %>% "
-"0","  group_by(UF) %>%  "
-"0","  dplyr::summarise(total = mean(annual_mean))"

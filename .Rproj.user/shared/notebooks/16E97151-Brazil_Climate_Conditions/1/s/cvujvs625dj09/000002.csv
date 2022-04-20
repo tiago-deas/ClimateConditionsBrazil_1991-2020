@@ -1,7 +1,0 @@
-"0",""
-"0",""
-"0","state_codes <- read.csv(""estados.csv"", header = T, encoding = ""UTF-8"") %>% "
-"0","   rename(""UF"" = ""SIGLA"") "
-"0",""
-"0","state_codes$UF <- str_replace_all(state_codes$UF, fixed("" ""), """")"
-"0",""

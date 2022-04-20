@@ -1,4 +1,0 @@
-"0","df_tmin_c <- left_join(df_tmin2,"
-"0","          weather_st,"
-"0","          by = ""Código"")"
-"0",""
