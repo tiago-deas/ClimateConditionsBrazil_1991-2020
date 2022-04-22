@@ -5,4 +5,4 @@ Personal project of weather conditions in Brazil from 1991 to 2020 using R. In t
 
 <h1>👇</h1>
 
-<h3>There is an PDF file named "Brazil_Climate_Conditions.pdf" with all instructions and information about my findings.</h3>
+<h3>There is a PDF file named "Brazil_Climate_Conditions.pdf" with all instructions and information about my findings.</h3>
